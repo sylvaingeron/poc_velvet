@@ -575,7 +575,7 @@
                             <span>📅 ${formatDate(poc.createdAt)}</span>
                         </div>
                         <div class="poc-actions">
-                            <a href="${poc.url}" target="_blank" class="btn-access" ${poc.status === 'development' ? 'style="opacity:0.6"' : ''}>
+                            <a href="#" onclick="openPoc('${poc.url}'); return false;" class="btn-access" ${poc.status === 'development' ? 'style="opacity:0.6"' : ''}>
                                 Accéder
                             </a>
                             <button class="btn-feedback" onclick="openFeedback('${poc.name}')">
@@ -591,6 +591,13 @@
             if (!dateStr) return '';
             const date = new Date(dateStr);
             return date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'short' });
+        }
+
+        function openPoc(url) {
+            // Ajouter le token à l'URL pour SSO entre les POC
+            const separator = url.includes('?') ? '&' : '?';
+            const urlWithToken = `${url}${separator}auth_token=${encodeURIComponent(token)}`;
+            window.open(urlWithToken, '_blank');
         }
 
         function openFeedback(pocName) {
