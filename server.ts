@@ -11,7 +11,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'poc-velvet-secret-change-me';
-const FEEDBACK_FORM_URL = process.env.FEEDBACK_FORM_URL || '';
+const FEEDBACK_FORM_URL = process.env.FEEDBACK_FORM_URL || 'https://forms.office.com/e/hYQuQaNr4d';
 
 // Middleware
 app.use(cors());
