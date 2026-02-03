@@ -54,7 +54,7 @@ const pocs = [
         id: 'email_velvet',
         name: 'Email Velvet',
         description: "Générateur d'emails personnalisés pour les communications clients Velvet.",
-        url: 'https://email-velvet-production.up.railway.app',
+        url: 'https://emailvelvet-production.up.railway.app',
         imageUrl: '/images/email_velvet.png',
         status: 'development',
         version: '1.0',
