@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const JWT_SECRET = process.env.JWT_SECRET || 'poc-velvet-secret-change-me';
+const JWT_SECRET = process.env.JWT_SECRET || 'velvet-poc-secret-2024-change-in-production';
 const FEEDBACK_FORM_URL = process.env.FEEDBACK_FORM_URL || 'https://forms.office.com/e/hYQuQaNr4d';
 
 // Middleware
