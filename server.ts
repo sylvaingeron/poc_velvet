@@ -132,8 +132,8 @@ app.get('/api/config', (req, res) => {
 // SERVEUR
 // ============================================
 
-// Route fallback pour SPA
-app.get('*', (req, res) => {
+// Route fallback pour SPA (Express 5 syntax)
+app.get('/{*path}', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
