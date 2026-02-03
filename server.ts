@@ -132,8 +132,13 @@ app.get('/api/config', (req, res) => {
 // SERVEUR
 // ============================================
 
-// Route fallback pour SPA (Express 5 syntax)
-app.get('/{*path}', (req, res) => {
+// Route fallback pour SPA - seulement pour les routes non-API
+app.use((req, res, next) => {
+    // Si c'est une route API, laisser passer (404 sera géré normalement)
+    if (req.path.startsWith('/api/')) {
+        return res.status(404).json({ error: 'Route not found' });
+    }
+    // Sinon, servir index.html pour le SPA
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
