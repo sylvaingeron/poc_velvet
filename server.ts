@@ -4,9 +4,13 @@ import path from 'path';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
-import fs from 'fs';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
+
+// Fix pour __dirname avec ESM/tsx
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -31,6 +35,32 @@ const users: { [email: string]: { password: string; name: string } } = {
         name: 'Sylvain Geron'
     }
 };
+
+// ============================================
+// CONFIGURATION DES POC (en dur pour simplifier)
+// ============================================
+const pocs = [
+    {
+        id: 'agent_velvet',
+        name: 'Agent Velvet',
+        description: 'Agent de vente conversationnel pour réserver des billets de train. Disponible en mode manuel, chat et vocal.',
+        url: 'https://agent-velvet-production.up.railway.app',
+        imageUrl: '/images/agent_velvet.png',
+        status: 'active',
+        version: '4.0',
+        createdAt: '2026-01-15'
+    },
+    {
+        id: 'email_velvet',
+        name: 'Email Velvet',
+        description: "Générateur d'emails personnalisés pour les communications clients Velvet.",
+        url: 'https://email-velvet-production.up.railway.app',
+        imageUrl: '/images/email_velvet.png',
+        status: 'development',
+        version: '1.0',
+        createdAt: '2026-02-01'
+    }
+];
 
 // ============================================
 // MIDDLEWARE D'AUTHENTIFICATION
@@ -109,14 +139,7 @@ app.get('/api/me', authenticateToken, (req: AuthRequest, res) => {
  * GET /api/pocs - Liste des POC
  */
 app.get('/api/pocs', authenticateToken, (req: AuthRequest, res) => {
-    try {
-        const pocsPath = path.join(__dirname, 'config', 'pocs.json');
-        const pocsData = JSON.parse(fs.readFileSync(pocsPath, 'utf-8'));
-        res.json(pocsData.pocs);
-    } catch (error) {
-        console.error('Erreur lecture POCs:', error);
-        res.status(500).json({ error: 'Erreur lors de la récupération des POCs' });
-    }
+    res.json(pocs);
 });
 
 /**
@@ -144,5 +167,6 @@ app.use((req, res, next) => {
 
 app.listen(PORT, () => {
     console.log(`🚀 POC Velvet Portal running on port ${PORT}`);
-    console.log(`📋 Feedback form: ${FEEDBACK_FORM_URL || 'Not configured'}`);
+    console.log(`📋 Feedback form: ${FEEDBACK_FORM_URL}`);
+    console.log(`📦 POCs configured: ${pocs.length}`);
 });
