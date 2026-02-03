@@ -48,7 +48,7 @@ const pocs = [
         imageUrl: '/images/agent_velvet.png',
         status: 'active',
         version: '4.0',
-        createdAt: '2026-01-15'
+        createdAt: '2026-02-01'
     },
     {
         id: 'email_velvet',
@@ -56,9 +56,9 @@ const pocs = [
         description: "Générateur d'emails personnalisés pour les communications clients Velvet.",
         url: 'https://emailvelvet-production.up.railway.app',
         imageUrl: '/images/email_velvet.png',
-        status: 'development',
+        status: 'active',
         version: '1.0',
-        createdAt: '2026-02-01'
+        createdAt: '2026-01-15'
     }
 ];
 
