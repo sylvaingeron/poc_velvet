@@ -22,12 +22,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 // UTILISATEURS (en dur pour le POC)
 // ============================================
 const users: { [email: string]: { password: string; name: string } } = {
-    'demo@velvet.fr': {
-        password: bcrypt.hashSync('music', 10),
-        name: 'Utilisateur Demo'
+    'poc@velvet.fr': {
+        password: bcrypt.hashSync('Velvet#POC2026!', 10),
+        name: 'Utilisateur POC'
     },
     'sylvain.geron@velvet.fr': {
-        password: bcrypt.hashSync('music', 10),
+        password: bcrypt.hashSync('Velvet#POC2026!', 10),
         name: 'Sylvain Geron'
     }
 };
