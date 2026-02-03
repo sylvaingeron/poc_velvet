@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Velvet</title>
+    <style>
+        :root {
+            --velours: #6B2D5C;
+            --velours-light: #8B4573;
+            --velours-dark: #4A1F3D;
+            --background: #FAFAFA;
+            --card-bg: #FFFFFF;
+            --text: #333333;
+            --text-light: #666666;
+            --success: #28a745;
+            --warning: #ffc107;
+            --border: #E0E0E0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--velours) 0%, var(--velours-light) 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            height: 40px;
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .header-subtitle {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-name {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .btn-logout {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .btn-logout:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Login Page */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-logo {
+            height: 60px;
+            margin-bottom: 20px;
+        }
+
+        .login-title {
+            font-size: 24px;
+            color: var(--velours);
+            margin-bottom: 10px;
+        }
+
+        .login-subtitle {
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--velours);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--velours) 0%, var(--velours-light) 100%);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(107, 45, 92, 0.3);
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .welcome-title {
+            font-size: 28px;
+            color: var(--velours);
+            margin-bottom: 10px;
+        }
+
+        .welcome-subtitle {
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        /* POC Grid */
+        .pocs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .poc-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .poc-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .poc-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, var(--velours-light) 0%, var(--velours) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+        }
+
+        .poc-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .poc-content {
+            padding: 20px;
+        }
+
+        .poc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .poc-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .poc-status {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .poc-status.active {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .poc-status.development {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .poc-description {
+            color: var(--text-light);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .poc-meta {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .poc-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-access {
+            flex: 1;
+            background: var(--velours);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: background 0.2s;
+        }
+
+        .btn-access:hover {
+            background: var(--velours-dark);
+        }
+
+        .btn-access:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-feedback {
+            background: white;
+            color: var(--velours);
+            border: 2px solid var(--velours);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .btn-feedback:hover {
+            background: var(--velours);
+            color: white;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-light);
+            font-size: 13px;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .pocs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .poc-actions {
+                flex-direction: column;
+            }
+        }
+
+        /* Version badge */
+        .version {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: var(--velours);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="login-page" class="login-container">
+        <div class="login-card">
+            <img src="/logo.png" alt="Velvet" class="login-logo" onerror="this.style.display='none'">
+            <h1 class="login-title">POC Velvet</h1>
+            <p class="login-subtitle">Connectez-vous pour accéder aux POC</p>
+
+            <div id="login-error" class="error-message"></div>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="votre.email@velvet.fr" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-primary">Se connecter</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app-page" style="display: none;">
+        <header class="header">
+            <div class="header-left">
+                <img src="/logo.png" alt="Velvet" class="logo" onerror="this.style.display='none'">
+                <div>
+                    <div class="header-title">POC Velvet</div>
+                    <div class="header-subtitle">Explorez nos preuves de concept</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <span class="user-name" id="user-name"></span>
+                <button class="btn-logout" onclick="logout()">Déconnexion</button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section class="welcome-section">
+                <h1 class="welcome-title">Bienvenue !</h1>
+                <p class="welcome-subtitle">Découvrez et testez les POC développés par l'équipe Innovation</p>
+            </section>
+
+            <div id="pocs-container" class="pocs-grid">
+                <div class="loading">Chargement des POC...</div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            © 2026 Velvet - Tous droits réservés
+        </footer>
+    </div>
+
+    <div class="version">v1.0</div>
+
+    <script>
+        // Configuration
+        let feedbackFormUrl = '';
+
+        // State
+        let token = localStorage.getItem('poc_velvet_token');
+        let user = JSON.parse(localStorage.getItem('poc_velvet_user') || 'null');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Charger la config
+            try {
+                const configRes = await fetch('/api/config');
+                const config = await configRes.json();
+                feedbackFormUrl = config.feedbackFormUrl;
+            } catch (e) {
+                console.error('Erreur config:', e);
+            }
+
+            // Vérifier si connecté
+            if (token && user) {
+                try {
+                    const res = await fetch('/api/me', {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    if (res.ok) {
+                        showApp();
+                        return;
+                    }
+                } catch (e) {}
+            }
+            showLogin();
+        });
+
+        // Login form
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('login-error');
+
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    errorDiv.textContent = data.error || 'Erreur de connexion';
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+
+                // Sauvegarder
+                token = data.token;
+                user = data.user;
+                localStorage.setItem('poc_velvet_token', token);
+                localStorage.setItem('poc_velvet_user', JSON.stringify(user));
+
+                showApp();
+            } catch (error) {
+                errorDiv.textContent = 'Erreur de connexion au serveur';
+                errorDiv.style.display = 'block';
+            }
+        });
+
+        function showLogin() {
+            document.getElementById('login-page').style.display = 'flex';
+            document.getElementById('app-page').style.display = 'none';
+        }
+
+        function showApp() {
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('app-page').style.display = 'block';
+            document.getElementById('user-name').textContent = user?.name || user?.email || '';
+            loadPocs();
+        }
+
+        function logout() {
+            localStorage.removeItem('poc_velvet_token');
+            localStorage.removeItem('poc_velvet_user');
+            token = null;
+            user = null;
+            showLogin();
+        }
+
+        async function loadPocs() {
+            const container = document.getElementById('pocs-container');
+
+            try {
+                const res = await fetch('/api/pocs', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!res.ok) {
+                    throw new Error('Erreur chargement');
+                }
+
+                const pocs = await res.json();
+                renderPocs(pocs);
+            } catch (error) {
+                container.innerHTML = '<div class="loading">Erreur lors du chargement des POC</div>';
+            }
+        }
+
+        function renderPocs(pocs) {
+            const container = document.getElementById('pocs-container');
+
+            if (!pocs || pocs.length === 0) {
+                container.innerHTML = '<div class="loading">Aucun POC disponible</div>';
+                return;
+            }
+
+            container.innerHTML = pocs.map(poc => `
+                <div class="poc-card">
+                    <div class="poc-image">
+                        ${poc.imageUrl ?
+                            `<img src="${poc.imageUrl}" alt="${poc.name}" onerror="this.parentElement.innerHTML='🚀'">` :
+                            '🚀'}
+                    </div>
+                    <div class="poc-content">
+                        <div class="poc-header">
+                            <h3 class="poc-name">${poc.name}</h3>
+                            <span class="poc-status ${poc.status}">${poc.status === 'active' ? '● Actif' : '◐ En dev'}</span>
+                        </div>
+                        <p class="poc-description">${poc.description}</p>
+                        <div class="poc-meta">
+                            <span>📦 v${poc.version}</span>
+                            <span>📅 ${formatDate(poc.createdAt)}</span>
+                        </div>
+                        <div class="poc-actions">
+                            <a href="${poc.url}" target="_blank" class="btn-access" ${poc.status === 'development' ? 'style="opacity:0.6"' : ''}>
+                                Accéder
+                            </a>
+                            <button class="btn-feedback" onclick="openFeedback('${poc.name}')">
+                                Feedback
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'short' });
+        }
+
+        function openFeedback(pocName) {
+            if (feedbackFormUrl) {
+                // Ouvrir MS Forms (on peut passer le nom du POC en paramètre si le form le supporte)
+                window.open(feedbackFormUrl, '_blank');
+            } else {
+                alert('Le formulaire de feedback n\\'est pas encore configuré.');
+            }
+        }
+    </script>
+</body>
+</html>

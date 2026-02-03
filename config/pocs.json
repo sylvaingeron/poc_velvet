@@ -1,0 +1,24 @@
+{
+  "pocs": [
+    {
+      "id": "agent_velvet",
+      "name": "Agent Velvet",
+      "description": "Agent de vente conversationnel pour réserver des billets de train. Disponible en mode manuel, chat et vocal.",
+      "url": "https://agent-velvet-production.up.railway.app",
+      "imageUrl": "/images/agent_velvet.png",
+      "status": "active",
+      "version": "4.0",
+      "createdAt": "2026-01-15"
+    },
+    {
+      "id": "email_velvet",
+      "name": "Email Velvet",
+      "description": "Générateur d'emails personnalisés pour les communications clients Velvet.",
+      "url": "https://email-velvet-production.up.railway.app",
+      "imageUrl": "/images/email_velvet.png",
+      "status": "development",
+      "version": "1.0",
+      "createdAt": "2026-02-01"
+    }
+  ]
+}
