@@ -44,7 +44,7 @@ const pocs = [
         id: 'agent_velvet',
         name: 'Agent Velvet',
         description: 'Agent de vente conversationnel pour réserver des billets de train. Disponible en mode manuel, chat et vocal.',
-        url: 'https://agent-velvet-production.up.railway.app',
+        url: 'https://agentvelvet-production-f8e8.up.railway.app',
         imageUrl: '/images/agent_velvet.png',
         status: 'active',
         version: '4.0',
